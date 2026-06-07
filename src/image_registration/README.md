@@ -15,8 +15,7 @@ Perspective transforms (`PerspectiveMatrix`, `PerspectiveTransformationMethod`, 
 | [`parameter.py`](./parameter.py) | Common registration parameters shared by all methods |
 | [`registration_result.py`](./registration_result.py) | Union type alias for method-specific registration detail results |
 | [`ecc/`](./ecc/) | Low-level ECC algorithm processor |
-| [`builder.py`](./builder.py) | Factory function for building registration processors |
-| [`method.py`](./method.py) | Enumeration of available registration methods |
+| [`method.py`](./method.py) | Enumeration of available registration methods with factory method |
 | [`sequential_image_registration.py`](./sequential_image_registration.py) | Sequential registration for processing image sequences |
 | [`processors/`](./processors/) | Method-specific registrators and parameters |
 
@@ -26,12 +25,10 @@ Perspective transforms (`PerspectiveMatrix`, `PerspectiveTransformationMethod`, 
 from image_registration import (
     ECCRegistrationParameters,
     RegistrationMethod,
-    build_registrator,
 )
 
 registration_params = ECCRegistrationParameters()
-registrator = build_registrator(
-    method=RegistrationMethod.ECC,
+registrator = RegistrationMethod.ECC.build_registrator(
     source_image=frame,
     registration_params=registration_params,
 )

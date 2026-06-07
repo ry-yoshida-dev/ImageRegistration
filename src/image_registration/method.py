@@ -10,7 +10,7 @@ from .processors import (
     ECCRegistrator,
     FarnebackRegistrationParameters,
     FarnebackRegistrator,
-    KPMatchingRegistration,
+    KPMatchingRegistrator,
     KPMatchingRegistrationParameters,
     LucasKanadeRegistrationParameters,
     LucasKanadeRegistrator,
@@ -25,7 +25,7 @@ class RegistrationMethod(Enum):
 
     KP_MATCHING = "KPMatching"
     ECC = "ECC"
-    FARBENACK_OPTICAL_FLOW = "Farneback"
+    FARNEBACK_OPTICAL_FLOW = "Farneback"
     LK_OPTICAL_FLOW = "LucasKanade"
 
     def build_registrator(
@@ -58,7 +58,7 @@ class RegistrationMethod(Enum):
                         "KP_MATCHING requires KPMatchingRegistrationParameters, "
                         + f"got {type(registration_params).__name__}"
                     )
-                return KPMatchingRegistration(
+                return KPMatchingRegistrator(
                     source_image=source_image,
                     registration_params=registration_params,
                     source_mask=source_mask,
@@ -74,10 +74,10 @@ class RegistrationMethod(Enum):
                     registration_params=registration_params,
                     source_mask=source_mask,
                 )
-            case RegistrationMethod.FARBENACK_OPTICAL_FLOW:
+            case RegistrationMethod.FARNEBACK_OPTICAL_FLOW:
                 if not isinstance(registration_params, FarnebackRegistrationParameters):
                     raise TypeError(
-                        "FARBENACK_OPTICAL_FLOW requires FarnebackRegistrationParameters, "
+                        "FARNEBACK_OPTICAL_FLOW requires FarnebackRegistrationParameters, "
                         + f"got {type(registration_params).__name__}"
                     )
                 return FarnebackRegistrator(

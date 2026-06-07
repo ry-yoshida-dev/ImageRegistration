@@ -1,7 +1,7 @@
 from ..ecc import ECCParameters, ECCProcessor
 from .ecc import ECCRegistrationParameters, ECCRegistrator
 from .farneback import FarnebackRegistrationParameters, FarnebackRegistrator
-from .kp_matching import KPMatchingRegistration, KPMatchingRegistrationParameters
+from .kp_matching import KPMatchingRegistrator, KPMatchingRegistrationParameters
 from .lucas_kanade import LucasKanadeRegistrationParameters, LucasKanadeRegistrator
 
 MethodRegistrationParameters = (
@@ -18,7 +18,7 @@ __all__ = [
     "ECCRegistrator",
     "FarnebackRegistrationParameters",
     "FarnebackRegistrator",
-    "KPMatchingRegistration",
+    "KPMatchingRegistrator",
     "KPMatchingRegistrationParameters",
     "LucasKanadeRegistrationParameters",
     "LucasKanadeRegistrator",

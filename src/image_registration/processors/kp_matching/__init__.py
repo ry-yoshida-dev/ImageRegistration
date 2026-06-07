@@ -1,7 +1,7 @@
 from .parameter import KPMatchingRegistrationParameters
-from .registrator import KPMatchingRegistration
+from .registrator import KPMatchingRegistrator
 
 __all__ = [
-    "KPMatchingRegistration",
+    "KPMatchingRegistrator",
     "KPMatchingRegistrationParameters",
 ]

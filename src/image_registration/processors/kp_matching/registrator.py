@@ -16,7 +16,7 @@ from .parameter import KPMatchingRegistrationParameters
 
 
 @dataclass(kw_only=True)
-class KPMatchingRegistration(Registrator[MatchResult]):
+class KPMatchingRegistrator(Registrator[MatchResult]):
     """
     Keypoint-matching image registration processor.
     """

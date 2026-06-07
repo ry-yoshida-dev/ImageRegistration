@@ -1,6 +1,5 @@
 from .data import RegistratorPreprocessedData
 from .registrator import Registrator
-from .builder import build_registrator
 from .ecc import ECCParameters, ECCProcessor, ECCResult
 from .method import RegistrationMethod
 from .parameter import ImageRegistrationParameters
@@ -29,5 +28,4 @@ __all__ = [
     "RegistrationMethod",
     "RegistratorPreprocessedData",
     "SequentialImageRegistrator",
-    "build_registrator",
 ]

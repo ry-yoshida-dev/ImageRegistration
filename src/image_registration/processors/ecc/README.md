@@ -17,12 +17,10 @@ This module integrates ECC into the shared `Registrator` pipeline. Low-level ECC
 from image_registration import (
     ECCRegistrationParameters,
     RegistrationMethod,
-    build_registrator,
 )
 
 registration_params = ECCRegistrationParameters()
-registrator = build_registrator(
-    method=RegistrationMethod.ECC,
+registrator = RegistrationMethod.ECC.build_registrator(
     source_image=frame,
     registration_params=registration_params,
 )

@@ -9,7 +9,6 @@ from projective import PerspectiveMatrix, register_perspective_matrix
 from .data import RegistratorPreprocessedData
 from .registration_result import RegistrationDetailResult
 from .registrator import Registrator
-from .builder import build_registrator
 from .method import RegistrationMethod
 from .processors import MethodRegistrationParameters
 
@@ -29,8 +28,7 @@ class SequentialImageRegistrator:
     previous_motion_matrix: PerspectiveMatrix = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
-        self.normal_registrator = build_registrator(
-            method=self.method,
+        self.normal_registrator = self.method.build_registrator(
             source_image=self.previous_image,
             registration_params=self.registration_params,
             source_mask=self.previous_mask,

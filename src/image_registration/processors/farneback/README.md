@@ -20,7 +20,7 @@ from image_registration import (
 )
 
 registration_params = FarnebackRegistrationParameters()
-registrator = RegistrationMethod.FARBENACK_OPTICAL_FLOW.build_registrator(
+registrator = RegistrationMethod.FARNEBACK_OPTICAL_FLOW.build_registrator(
     source_image=frame,
     registration_params=registration_params,
 )

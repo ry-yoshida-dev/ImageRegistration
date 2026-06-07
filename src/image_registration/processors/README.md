@@ -19,12 +19,10 @@ This module contains image registration implementations organized by method. Eac
 from image_registration import (
     ECCRegistrationParameters,
     RegistrationMethod,
-    build_registrator,
 )
 
 registration_params = ECCRegistrationParameters()
-registrator = build_registrator(
-    method=RegistrationMethod.ECC,
+registrator = RegistrationMethod.ECC.build_registrator(
     source_image=frame,
     registration_params=registration_params,
 )

@@ -36,15 +36,13 @@ import cv2
 from image_registration import (
     ECCRegistrationParameters,
     RegistrationMethod,
-    build_registrator,
 )
 
 source = cv2.imread("frame_0.png")
 target = cv2.imread("frame_1.png")
 
 registration_params = ECCRegistrationParameters()
-registrator = build_registrator(
-    method=RegistrationMethod.ECC,
+registrator = RegistrationMethod.ECC.build_registrator(
     source_image=source,
     registration_params=registration_params,
 )
@@ -65,7 +63,7 @@ from image_registration import (
 frames = [cv2.imread(f"frame_{i}.png") for i in range(10)]
 
 sequential = SequentialImageRegistrator(
-    method=RegistrationMethod.FARBENACK_OPTICAL_FLOW,
+    method=RegistrationMethod.FARNEBACK_OPTICAL_FLOW,
     previous_image=frames[0],
     registration_params=FarnebackRegistrationParameters(),
 )
@@ -80,14 +78,14 @@ for frame in frames[1:]:
 | ------ | ---- | --------------- |
 | ECC | `RegistrationMethod.ECC` | `ECCRegistrationParameters` |
 | Keypoint matching | `RegistrationMethod.KP_MATCHING` | `KPMatchingRegistrationParameters` |
-| Farneback optical flow | `RegistrationMethod.FARBENACK_OPTICAL_FLOW` | `FarnebackRegistrationParameters` |
+| Farneback optical flow | `RegistrationMethod.FARNEBACK_OPTICAL_FLOW` | `FarnebackRegistrationParameters` |
 | Lucas-Kanade optical flow | `RegistrationMethod.LK_OPTICAL_FLOW` | `LucasKanadeRegistrationParameters` |
 
 ## Project Structure
 
 | Path | Description |
 | ---- | ----------- |
-| [`src/image_registration/`](./src/image_registration/) | Core registration API, builder, and sequential registrator |
+| [`src/image_registration/`](./src/image_registration/) | Core registration API and sequential registrator |
 | [`src/image_registration/processors/`](./src/image_registration/processors/) | Method-specific registrators and parameters |
 | [`src/image_registration/ecc/`](./src/image_registration/ecc/) | Low-level ECC algorithm processor |
 
