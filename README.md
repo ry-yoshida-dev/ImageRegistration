@@ -17,7 +17,7 @@ Each method is configured through a dedicated parameter dataclass and returns a 
 ## Installation
 
 ```bash
-pip install git+https://github.com/ry-yoshida-dev/ImageRegistrator.git
+pip install git+https://github.com/ry-yoshida-dev/ImageRegistration.git
 ```
 
 Or with [uv](https://docs.astral.sh/uv/):
