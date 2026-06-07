@@ -24,7 +24,7 @@ class SequentialImageRegistrator:
     previous_image: np.ndarray
     registration_params: MethodRegistrationParameters
     previous_mask: np.ndarray | None = None
-    normal_registrator: Registrator = field(init=False, repr=False)
+    normal_registrator: Registrator[RegistrationDetailResult] = field(init=False, repr=False)
     previous_data: RegistratorPreprocessedData = field(init=False, repr=False)
     previous_motion_matrix: PerspectiveMatrix = field(init=False, repr=False)
 

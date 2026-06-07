@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 from enum import Enum
 
+from .registration_result import RegistrationDetailResult
 from .registrator import Registrator
 from .processors import (
     ECCRegistrationParameters,
@@ -32,7 +33,7 @@ class RegistrationMethod(Enum):
         source_image: np.ndarray,
         registration_params: MethodRegistrationParameters,
         source_mask: np.ndarray | None = None,
-    ) -> Registrator:
+    ) -> Registrator[RegistrationDetailResult]:
         """
         Build a registrator for this method using a typed parameter dataclass.
 

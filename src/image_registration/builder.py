@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import numpy as np
 
-from .registrator import Registrator
 from .method import RegistrationMethod
+from .registration_result import RegistrationDetailResult
+from .registrator import Registrator
 from .processors import (
     ECCRegistrationParameters,
     ECCRegistrator,
@@ -22,7 +23,7 @@ def build_registrator(
     source_image: np.ndarray,
     registration_params: MethodRegistrationParameters,
     source_mask: np.ndarray | None = None,
-) -> Registrator:
+) -> Registrator[RegistrationDetailResult]:
     """
     Build a registrator instance from a method enum and typed parameters.
 
