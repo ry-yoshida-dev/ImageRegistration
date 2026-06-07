@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "image-registration"
+version = "0.0.1"
+authors = [
+    { name = "Ryuto Yoshida" },
+]
+description = "Typed image registration library with ECC, keypoint matching, and optical flow methods."
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = [
+    "numpy",
+    "opencv-contrib-python",
+    "projective @ git+https://github.com/ry-yoshida-dev/Projective.git",
+    "opencv-keypoint @ git+https://github.com/ry-yoshida-dev/OpenCVKeypoint.git",
+    "opencv-utility @ git+https://github.com/ry-yoshida-dev/OpenCVUtility.git",
+]
+
+[project.urls]
+Homepage = "https://github.com/ry-yoshida-dev/ImageRegistrator"
+"Bug Tracker" = "https://github.com/ry-yoshida-dev/ImageRegistrator/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+image_registration = ["py.typed"]
