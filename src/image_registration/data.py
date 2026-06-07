@@ -5,6 +5,8 @@ import numpy as np
 from dataclasses import dataclass
 from typing import override
 
+from kp_detection import DetectionResultUnion
+
 
 @dataclass
 class RegistratorPreprocessedData:
@@ -19,6 +21,8 @@ class RegistratorPreprocessedData:
         Detected keypoints in original image coordinates.
     descriptors : np.ndarray
         Descriptor matrix aligned with ``keypoints``.
+    detection_result : DetectionResultUnion | None
+        Full keypoint detection result when a detector is configured.
     mask : np.ndarray | None
         Optional mask aligned with ``image``.
     """
@@ -26,6 +30,7 @@ class RegistratorPreprocessedData:
     image: np.ndarray
     keypoints: list[cv2.KeyPoint]
     descriptors: np.ndarray
+    detection_result: DetectionResultUnion | None = None
     mask: np.ndarray | None = None
 
     @override

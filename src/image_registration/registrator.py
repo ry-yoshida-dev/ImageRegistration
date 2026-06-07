@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import TypeVar
 
-from kp_detection import KPDetector
+from kp_detection import DetectionResultUnion, KPDetector
 from projective import (
     PerspectiveMatrix,
     register_perspective_matrix,
@@ -77,6 +77,7 @@ class Registrator[DetailResultT](ABC):
             image if len(image.shape) == 2 else cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         )
 
+        detection_result: DetectionResultUnion | None = None
         if self.keypoint_detector is None:
             keypoints: list[cv2.KeyPoint] = []
             descriptors = np.array([])
@@ -96,6 +97,7 @@ class Registrator[DetailResultT](ABC):
             image=grayscale_image,
             keypoints=keypoints,
             descriptors=descriptors,
+            detection_result=detection_result,
             mask=mask,
         )
 

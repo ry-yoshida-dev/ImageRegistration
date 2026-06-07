@@ -36,3 +36,12 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 image_registration = ["py.typed"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]

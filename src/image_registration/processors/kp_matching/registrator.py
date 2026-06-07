@@ -6,7 +6,7 @@ from typing import override
 import numpy as np
 
 from kp_detection import KPDetector
-from kp_matching import KPMatchingProcessor, MatchResult
+from kp_matching import KPMatchingProcessor, PairedDetectionResult
 from projective import PerspectiveMatrix
 
 from ...data import RegistratorPreprocessedData
@@ -16,7 +16,7 @@ from .parameter import KPMatchingRegistrationParameters
 
 
 @dataclass(kw_only=True)
-class KPMatchingRegistrator(Registrator[MatchResult]):
+class KPMatchingRegistrator(Registrator[PairedDetectionResult]):
     """
     Keypoint-matching image registration processor.
     """
@@ -54,7 +54,7 @@ class KPMatchingRegistrator(Registrator[MatchResult]):
         target_data: RegistratorPreprocessedData,
         combined_mask: np.ndarray | None = None,
         initial_motion_matrix: PerspectiveMatrix | None = None,
-    ) -> tuple[PerspectiveMatrix, MatchResult]:
+    ) -> tuple[PerspectiveMatrix, PairedDetectionResult]:
         """
         Compute the motion matrix from matched keypoint correspondences.
 
@@ -69,28 +69,27 @@ class KPMatchingRegistrator(Registrator[MatchResult]):
 
         Returns
         -------
-        tuple[PerspectiveMatrix, MatchResult]
-            Motion matrix in original image coordinates and keypoint match
-            details.
+        tuple[PerspectiveMatrix, PairedDetectionResult]
+            Motion matrix in original image coordinates and paired keypoint
+            match details.
         """
         del combined_mask, initial_motion_matrix
 
-        match_result = self.processor.match(
-            self.source_data.descriptors,
-            target_data.descriptors,
+        source_detection_result = self.source_data.detection_result
+        target_detection_result = target_data.detection_result
+        if source_detection_result is None or target_detection_result is None:
+            raise ValueError("Keypoint detection results are not available.")
+
+        paired_result = self.processor.run_pipeline(
+            query_det_result=source_detection_result,
+            gallery_det_result=target_detection_result,
         )
-        matched_source_kps = np.array(
-            [self.source_data.keypoints[match.queryIdx].pt for match in match_result.matches],
-            dtype=np.float32,
-        )
-        matched_target_kps = np.array(
-            [target_data.keypoints[match.trainIdx].pt for match in match_result.matches],
-            dtype=np.float32,
-        )
+        matched_source_kps = paired_result.query_matched_coordinates.astype(np.float32)
+        matched_target_kps = paired_result.gallery_matched_coordinates.astype(np.float32)
         transform_type = self.params.transform_type
         motion_matrix, _ = transform_type.perspective_class.create_from_points(
             origin_points=matched_source_kps,
             destination_points=matched_target_kps,
             ransac_th=self.params.ransac_th,
         )
-        return motion_matrix, match_result
+        return motion_matrix, paired_result

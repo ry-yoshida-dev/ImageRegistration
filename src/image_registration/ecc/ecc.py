@@ -210,13 +210,14 @@ class ECCProcessor:
         ``warp_matrix`` is updated in place by OpenCV function ``cv2.findTransformECC``.
         """
         input_mask = _EMPTY_ECC_MASK if mask is None else mask
+        warp_matrix_f32 = np.asarray(warp_matrix, dtype=np.float32)
         correlation_coefficient, _ = cv2.findTransformECC(
             source_image,
             target_image,
-            warp_matrix,
+            warp_matrix_f32,
             self.params.cv2_motion_type,
             self.criteria,
             input_mask,
             self.params.gaussFiltSize,
         )
-        return warp_matrix.copy(), float(correlation_coefficient)
+        return warp_matrix_f32.copy(), float(correlation_coefficient)

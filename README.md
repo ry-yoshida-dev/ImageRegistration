@@ -91,6 +91,15 @@ for frame in frames[1:]:
 
 See each directory's `README.md` for component-level details.
 
+## Testing
+
+```bash
+uv pip install -e ".[dev]"
+pytest
+```
+
+See [`tests/README.md`](./tests/README.md) for the test layout.
+
 ## Dependencies
 
 | Package | Role |

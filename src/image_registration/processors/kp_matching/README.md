@@ -2,13 +2,13 @@
 
 ## Overview
 
-This module provides keypoint-matching image registration using external `kp_detection` and `kp_matching` packages. Image rescaling is configured via `kp_detection_parameters.scale_factor`.
+This module provides keypoint-matching image registration using external `kp_detection` and `kp_matching` packages. Matching is performed through `KPMatchingProcessor.run_pipeline`, and the registrator returns a `PairedDetectionResult`. Image rescaling is configured via `kp_detection_parameters.scale_factor`.
 
 ## Components
 
 | Component | Description |
 | --------- | ----------- |
-| [`registrator.py`](./registrator.py) | Keypoint-matching registrator |
+| [`registrator.py`](./registrator.py) | Keypoint-matching registrator using `run_pipeline` |
 | [`parameter.py`](./parameter.py) | Keypoint-matching registration parameters |
 
 ## Examples
