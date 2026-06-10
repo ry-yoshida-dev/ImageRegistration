@@ -7,6 +7,8 @@ from typing import override
 
 from kp_detection import DetectionResultUnion
 
+from .types import UInt8Image, UInt8Mask
+
 
 @dataclass
 class RegistratorPreprocessedData:
@@ -15,7 +17,7 @@ class RegistratorPreprocessedData:
 
     Attributes
     ----------
-    image : np.ndarray
+    image : UInt8Image
         Grayscale image in original image coordinates.
     keypoints : list[cv2.KeyPoint]
         Detected keypoints in original image coordinates.
@@ -23,15 +25,15 @@ class RegistratorPreprocessedData:
         Descriptor matrix aligned with ``keypoints``.
     detection_result : DetectionResultUnion | None
         Full keypoint detection result when a detector is configured.
-    mask : np.ndarray | None
+    mask : UInt8Mask | None
         Optional mask aligned with ``image``.
     """
 
-    image: np.ndarray
+    image: UInt8Image
     keypoints: list[cv2.KeyPoint]
     descriptors: np.ndarray
     detection_result: DetectionResultUnion | None = None
-    mask: np.ndarray | None = None
+    mask: UInt8Mask | None = None
 
     @override
     def __str__(self) -> str:

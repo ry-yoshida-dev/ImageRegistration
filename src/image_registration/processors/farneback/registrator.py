@@ -9,6 +9,7 @@ from kp_detection import KPDetector
 from optical_flow import FarnebackFlow, FarnebackResult
 from projective import PerspectiveMatrix
 
+from ...types import UInt8Mask
 from ...data import RegistratorPreprocessedData
 from ...registrator import Registrator
 from ...parameter import ImageRegistrationParameters
@@ -41,15 +42,15 @@ class FarnebackRegistrator(Registrator[FarnebackResult]):
     @override
     def create_combined_mask(
         self,
-        target_mask: np.ndarray | None,
-        source_mask: np.ndarray | None,
-    ) -> np.ndarray | None:
+        target_mask: UInt8Mask | None,
+        source_mask: UInt8Mask | None,
+    ) -> UInt8Mask | None:
         """
         Create a combined mask for Farneback registration.
 
         Returns
         -------
-        np.ndarray | None
+        UInt8Mask | None
             Source mask when both masks are provided.
         """
         if target_mask is None or source_mask is None:
@@ -60,7 +61,7 @@ class FarnebackRegistrator(Registrator[FarnebackResult]):
     def compute_motion_matrix(
         self,
         target_data: RegistratorPreprocessedData,
-        combined_mask: np.ndarray | None = None,
+        combined_mask: UInt8Mask | None = None,
         initial_motion_matrix: PerspectiveMatrix | None = None,
     ) -> tuple[PerspectiveMatrix, FarnebackResult]:
         """
@@ -70,7 +71,7 @@ class FarnebackRegistrator(Registrator[FarnebackResult]):
         ----------
         target_data : RegistratorPreprocessedData
             Preprocessed target image data.
-        combined_mask : np.ndarray | None
+        combined_mask : UInt8Mask | None
             Optional mask applied during flow estimation and keypoint detection.
         initial_motion_matrix : PerspectiveMatrix | None
             Unused for Farneback registration; kept for interface compatibility.

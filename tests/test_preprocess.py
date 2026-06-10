@@ -6,11 +6,12 @@ from image_registration import (
     ECCRegistrationParameters,
     KPMatchingRegistrationParameters,
     RegistrationMethod,
+    UInt8Image,
 )
 
 
 def test_preprocess_converts_bgr_to_grayscale(
-    source_image_bgr: np.ndarray,
+    source_image_bgr: UInt8Image,
 ) -> None:
     """Registrator preprocessing should accept BGR images and convert them."""
     registrator = RegistrationMethod.ECC.build_registrator(
@@ -21,7 +22,7 @@ def test_preprocess_converts_bgr_to_grayscale(
 
 
 def test_preprocess_detects_keypoints_for_kp_matching(
-    source_image: np.ndarray,
+    source_image: UInt8Image,
 ) -> None:
     """Keypoint-based registrators should populate keypoints during preprocessing."""
     registrator = RegistrationMethod.KP_MATCHING.build_registrator(
@@ -34,7 +35,7 @@ def test_preprocess_detects_keypoints_for_kp_matching(
 
 
 def test_preprocess_keeps_grayscale_image_unchanged(
-    source_image: np.ndarray,
+    source_image: UInt8Image,
 ) -> None:
     """Grayscale input should be stored without channel conversion."""
     registrator = RegistrationMethod.ECC.build_registrator(

@@ -8,14 +8,15 @@ from image_registration import (
     LucasKanadeRegistrationParameters,
     RegistrationMethod,
     SequentialImageRegistrator,
+    UInt8Image,
 )
 
 from tests.helpers import assert_affine_matrix_close
 
 
 def test_sequential_update_advances_reference_frame(
-    source_image: np.ndarray,
-    target_image: np.ndarray,
+    source_image: UInt8Image,
+    target_image: UInt8Image,
     affine_transform: np.ndarray,
 ) -> None:
     """Sequential registration should return a motion matrix and advance state."""
@@ -37,8 +38,8 @@ def test_sequential_update_advances_reference_frame(
 
 
 def test_register_image_replaces_reference_without_motion_estimation(
-    source_image: np.ndarray,
-    target_image: np.ndarray,
+    source_image: UInt8Image,
+    target_image: UInt8Image,
 ) -> None:
     """register_image should replace the reference frame without estimation."""
     registration_params = LucasKanadeRegistrationParameters(

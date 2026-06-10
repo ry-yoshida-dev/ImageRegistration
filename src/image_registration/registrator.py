@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import TypeVar
+from typing import TypeVar, cast
 
 from kp_detection import DetectionResultUnion, KPDetector
 from projective import (
@@ -12,6 +12,7 @@ from projective import (
     register_perspective_matrix,
 )
 
+from .types import UInt8Image, UInt8Mask
 from .data import RegistratorPreprocessedData
 from .parameter import ImageRegistrationParameters
 
@@ -24,8 +25,8 @@ class Registrator[DetailResultT](ABC):
     Abstract base dataclass for image registration.
     """
 
-    source_image: np.ndarray
-    source_mask: np.ndarray | None = None
+    source_image: UInt8Image
+    source_mask: UInt8Mask | None = None
     keypoint_detector: KPDetector | None = field(default=None, init=False)
     source_data: RegistratorPreprocessedData = field(init=False, repr=False)
     motion_matrix: PerspectiveMatrix = field(init=False, repr=False)
@@ -52,8 +53,8 @@ class Registrator[DetailResultT](ABC):
 
     def preprocess(
         self,
-        image: np.ndarray,
-        mask: np.ndarray | None = None,
+        image: UInt8Image,
+        mask: UInt8Mask | None = None,
     ) -> RegistratorPreprocessedData:
         """
         Convert an input image to grayscale and detect keypoints.
@@ -63,9 +64,9 @@ class Registrator[DetailResultT](ABC):
 
         Parameters
         ----------
-        image : np.ndarray
+        image : UInt8Image
             Input image in grayscale or BGR format.
-        mask : np.ndarray | None
+        mask : UInt8Mask | None
             Optional mask aligned with ``image``.
 
         Returns
@@ -73,9 +74,9 @@ class Registrator[DetailResultT](ABC):
         RegistratorPreprocessedData
             Grayscale image, keypoints, descriptors, and optional mask.
         """
-        grayscale_image = (
+        grayscale_image: UInt8Image = cast(UInt8Image, (
             image if len(image.shape) == 2 else cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        )
+        ))
 
         detection_result: DetectionResultUnion | None = None
         if self.keypoint_detector is None:
@@ -103,8 +104,8 @@ class Registrator[DetailResultT](ABC):
 
     def run_registration_pipeline(
         self,
-        target_image: np.ndarray,
-        target_mask: np.ndarray | None = None,
+        target_image: UInt8Image,
+        target_mask: UInt8Mask | None = None,
         initial_motion_matrix: PerspectiveMatrix | None = None,
     ) -> tuple[PerspectiveMatrix, DetailResultT]:
         """
@@ -112,9 +113,9 @@ class Registrator[DetailResultT](ABC):
 
         Parameters
         ----------
-        target_image : np.ndarray
+        target_image : UInt8Image
             Target image to register against the source.
-        target_mask : np.ndarray | None
+        target_mask : UInt8Mask | None
             Optional mask for the target image.
         initial_motion_matrix : PerspectiveMatrix | None
             Optional initial motion matrix in original image coordinates.
@@ -142,9 +143,9 @@ class Registrator[DetailResultT](ABC):
     @abstractmethod
     def create_combined_mask(
         self,
-        target_mask: np.ndarray | None,
-        source_mask: np.ndarray | None,
-    ) -> np.ndarray | None:
+        target_mask: UInt8Mask | None,
+        source_mask: UInt8Mask | None,
+    ) -> UInt8Mask | None:
         """
         Create a combined mask from the target mask and the source mask.
         """
@@ -153,7 +154,7 @@ class Registrator[DetailResultT](ABC):
     def compute_motion_matrix(
         self,
         target_data: RegistratorPreprocessedData,
-        combined_mask: np.ndarray | None = None,
+        combined_mask: UInt8Mask | None = None,
         initial_motion_matrix: PerspectiveMatrix | None = None,
     ) -> tuple[PerspectiveMatrix, DetailResultT]:
         """
@@ -163,7 +164,7 @@ class Registrator[DetailResultT](ABC):
         ----------
         target_data : RegistratorPreprocessedData
             Preprocessed target image data.
-        combined_mask : np.ndarray | None
+        combined_mask : UInt8Mask | None
             Optional combined mask aligned with ``target_data.image``.
         initial_motion_matrix : PerspectiveMatrix | None
             Optional initial motion matrix in original image coordinates.

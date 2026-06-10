@@ -7,10 +7,11 @@ from typing import cast
 
 from projective import PerspectiveMatrix, register_perspective_matrix
 
+from ..types.array import UInt8Image, UInt8Mask
 from .parameter import ECCParameters
 from .result import ECCResult
 
-_EMPTY_ECC_MASK: np.ndarray = np.empty((0, 0), dtype=np.uint8)
+_EMPTY_ECC_MASK: UInt8Mask = np.empty((0, 0), dtype=np.uint8)
 
 
 @dataclass
@@ -34,23 +35,23 @@ class ECCProcessor:
 
     def run(
         self,
-        source_image: np.ndarray,
-        target_image: np.ndarray,
+        source_image: UInt8Image,
+        target_image: UInt8Image,
         previous_motion_matrix: PerspectiveMatrix | None = None,
-        mask: np.ndarray | None = None,
+        mask: UInt8Mask | None = None,
     ) -> tuple[PerspectiveMatrix, ECCResult]:
         """
         Run ECC registration between two frames.
 
         Parameters
         ----------
-        source_image : np.ndarray
+        source_image : UInt8Image
             Source frame used as the ECC template.
-        target_image : np.ndarray
+        target_image : UInt8Image
             Target frame to align with the source frame.
         previous_motion_matrix : PerspectiveMatrix | None
             Optional initial motion matrix in original image coordinates.
-        mask : np.ndarray | None
+        mask : UInt8Mask | None
             Optional mask restricting the registration region.
 
         Returns
@@ -91,18 +92,18 @@ class ECCProcessor:
                 return identity_matrix, ecc_result
             raise ValueError(f"ECC algorithm failed: {message}") from error
 
-    def _rescale_image(self, image: np.ndarray) -> np.ndarray:
+    def _rescale_image(self, image: UInt8Image) -> UInt8Image:
         """
         Resize an image according to ``params.scale_factor``.
 
         Parameters
         ----------
-        image : np.ndarray
+        image : UInt8Image
             Input grayscale image.
 
         Returns
         -------
-        np.ndarray
+        UInt8Image
             Resized image. Returns ``image`` unchanged when ``scale_factor == 1.0``.
         """
         if self.params.scale_factor == 1.0:
@@ -120,18 +121,18 @@ class ECCProcessor:
             )
         return cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_LINEAR)
 
-    def _rescale_mask(self, mask: np.ndarray | None) -> np.ndarray | None:
+    def _rescale_mask(self, mask: UInt8Mask | None) -> UInt8Mask | None:
         """
         Resize a mask according to ``params.scale_factor``.
 
         Parameters
         ----------
-        mask : np.ndarray | None
+        mask : UInt8Mask | None
             Boolean or numeric mask aligned with the input image.
 
         Returns
         -------
-        np.ndarray | None
+        UInt8Mask | None
             Resized mask. Returns ``mask`` unchanged when it is None or
             ``scale_factor == 1.0``.
         """
@@ -180,23 +181,23 @@ class ECCProcessor:
 
     def _find_motion_matrix(
         self,
-        source_image: np.ndarray,
-        target_image: np.ndarray,
+        source_image: UInt8Image,
+        target_image: UInt8Image,
         warp_matrix: np.ndarray,
-        mask: np.ndarray | None,
+        mask: UInt8Mask | None,
     ) -> tuple[np.ndarray, float]:
         """
         Find the motion matrix for the ECC algorithm.
 
         Parameters
         ----------
-        source_image : np.ndarray
+        source_image : UInt8Image
             Source image for ECC in working coordinates.
-        target_image : np.ndarray
+        target_image : UInt8Image
             Target image for ECC in working coordinates.
         warp_matrix : np.ndarray
             Initial warp matrix updated in place by OpenCV.
-        mask : np.ndarray | None
+        mask : UInt8Mask | None
             Optional registration mask in working coordinates.
 
         Returns

@@ -10,6 +10,7 @@ from image_registration import (
     KPMatchingRegistrationParameters,
     LucasKanadeRegistrationParameters,
     RegistrationMethod,
+    UInt8Image,
 )
 from image_registration.ecc import ECCParameters, ECCResult
 
@@ -51,8 +52,8 @@ AFFINE_TRANSFORM_TYPE = PerspectiveTransformationMethod.AFFINE
     ],
 )
 def test_affine_registration_recovers_known_transform(
-    source_image: np.ndarray,
-    target_image: np.ndarray,
+    source_image: UInt8Image,
+    target_image: UInt8Image,
     affine_transform: np.ndarray,
     method: RegistrationMethod,
     registration_params: (

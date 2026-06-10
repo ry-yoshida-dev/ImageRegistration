@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-import numpy as np
 from enum import Enum
 
-from .registration_result import RegistrationDetailResult
+from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 from .registrator import Registrator
 from .processors import (
     ECCRegistrationParameters,
@@ -30,20 +29,20 @@ class RegistrationMethod(Enum):
 
     def build_registrator(
         self,
-        source_image: np.ndarray,
+        source_image: UInt8Image,
         registration_params: MethodRegistrationParameters,
-        source_mask: np.ndarray | None = None,
+        source_mask: UInt8Mask | None = None,
     ) -> Registrator[RegistrationDetailResult]:
         """
         Build a registrator for this method using a typed parameter dataclass.
 
         Parameters
         ----------
-        source_image : np.ndarray
+        source_image : UInt8Image
             Source image used to initialize registration state.
         registration_params : MethodRegistrationParameters
             Method-specific parameter dataclass.
-        source_mask : np.ndarray | None
+        source_mask : UInt8Mask | None
             Optional mask for the source image.
 
         Returns

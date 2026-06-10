@@ -3,12 +3,11 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import override
 
-import numpy as np
-
 from kp_detection import KPDetector
 from optical_flow import LucasKanadeResult, PyrLKFlow
 from projective import PerspectiveMatrix
 
+from ...types import UInt8Mask
 from ...data import RegistratorPreprocessedData
 from ...registrator import Registrator
 from ...parameter import ImageRegistrationParameters
@@ -42,9 +41,9 @@ class LucasKanadeRegistrator(Registrator[LucasKanadeResult]):
     @override
     def create_combined_mask(
         self,
-        target_mask: np.ndarray | None,
-        source_mask: np.ndarray | None,
-    ) -> np.ndarray | None:
+        target_mask: UInt8Mask | None,
+        source_mask: UInt8Mask | None,
+    ) -> UInt8Mask | None:
         if target_mask is None or source_mask is None:
             return None
         return source_mask
@@ -53,7 +52,7 @@ class LucasKanadeRegistrator(Registrator[LucasKanadeResult]):
     def compute_motion_matrix(
         self,
         target_data: RegistratorPreprocessedData,
-        combined_mask: np.ndarray | None = None,
+        combined_mask: UInt8Mask | None = None,
         initial_motion_matrix: PerspectiveMatrix | None = None,
     ) -> tuple[PerspectiveMatrix, LucasKanadeResult]:
         """
@@ -63,7 +62,7 @@ class LucasKanadeRegistrator(Registrator[LucasKanadeResult]):
         ----------
         target_data : RegistratorPreprocessedData
             Preprocessed target image data.
-        combined_mask : np.ndarray | None
+        combined_mask : UInt8Mask | None
             Unused for Lucas-Kanade registration; kept for interface compatibility.
         initial_motion_matrix : PerspectiveMatrix | None
             Unused for Lucas-Kanade registration; kept for interface compatibility.

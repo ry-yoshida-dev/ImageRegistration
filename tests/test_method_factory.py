@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import numpy as np
 import pytest
 
 from image_registration import (
@@ -8,11 +7,12 @@ from image_registration import (
     FarnebackRegistrationParameters,
     KPMatchingRegistrationParameters,
     RegistrationMethod,
+    UInt8Image,
 )
 
 
 def test_build_registrator_rejects_mismatched_parameter_type(
-    source_image: np.ndarray,
+    source_image: UInt8Image,
 ) -> None:
     """Each registration method should require its own parameter dataclass."""
     with pytest.raises(TypeError, match="ECC requires ECCRegistrationParameters"):

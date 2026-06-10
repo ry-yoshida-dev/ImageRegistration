@@ -3,11 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass, field, replace
 from typing import override
 
-import numpy as np
-
 from kp_detection import KPDetector
 from projective import PerspectiveMatrix
 
+from ...types import UInt8Mask
 from ...data import RegistratorPreprocessedData
 from ...registrator import Registrator
 from ...ecc import ECCProcessor, ECCResult
@@ -49,9 +48,9 @@ class ECCRegistrator(Registrator[ECCResult]):
     @override
     def create_combined_mask(
         self,
-        target_mask: np.ndarray | None,
-        source_mask: np.ndarray | None,
-    ) -> np.ndarray | None:
+        target_mask: UInt8Mask | None,
+        source_mask: UInt8Mask | None,
+    ) -> UInt8Mask | None:
         if target_mask is None or source_mask is None:
             return None
         return target_mask & source_mask
@@ -60,7 +59,7 @@ class ECCRegistrator(Registrator[ECCResult]):
     def compute_motion_matrix(
         self,
         target_data: RegistratorPreprocessedData,
-        combined_mask: np.ndarray | None = None,
+        combined_mask: UInt8Mask | None = None,
         initial_motion_matrix: PerspectiveMatrix | None = None,
     ) -> tuple[PerspectiveMatrix, ECCResult]:
         return self.processor.run(

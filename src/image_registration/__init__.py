@@ -1,9 +1,9 @@
+from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 from .data import RegistratorPreprocessedData
 from .registrator import Registrator
 from .ecc import ECCParameters, ECCProcessor, ECCResult
 from .method import RegistrationMethod
 from .parameter import ImageRegistrationParameters
-from .registration_result import RegistrationDetailResult
 from .processors import (
     ECCRegistrationParameters,
     FarnebackRegistrationParameters,
@@ -28,4 +28,6 @@ __all__ = [
     "RegistrationMethod",
     "RegistratorPreprocessedData",
     "SequentialImageRegistrator",
+    "UInt8Image",
+    "UInt8Mask",
 ]

@@ -9,6 +9,7 @@ from kp_detection import KPDetector
 from kp_matching import KPMatchingProcessor, PairedDetectionResult
 from projective import PerspectiveMatrix
 
+from ...types import UInt8Mask
 from ...data import RegistratorPreprocessedData
 from ...registrator import Registrator
 from ...parameter import ImageRegistrationParameters
@@ -41,9 +42,9 @@ class KPMatchingRegistrator(Registrator[PairedDetectionResult]):
     @override
     def create_combined_mask(
         self,
-        target_mask: np.ndarray | None,
-        source_mask: np.ndarray | None,
-    ) -> np.ndarray | None:
+        target_mask: UInt8Mask | None,
+        source_mask: UInt8Mask | None,
+    ) -> UInt8Mask | None:
         if target_mask is None or source_mask is None:
             return None
         return target_mask & source_mask
@@ -52,7 +53,7 @@ class KPMatchingRegistrator(Registrator[PairedDetectionResult]):
     def compute_motion_matrix(
         self,
         target_data: RegistratorPreprocessedData,
-        combined_mask: np.ndarray | None = None,
+        combined_mask: UInt8Mask | None = None,
         initial_motion_matrix: PerspectiveMatrix | None = None,
     ) -> tuple[PerspectiveMatrix, PairedDetectionResult]:
         """
@@ -62,7 +63,7 @@ class KPMatchingRegistrator(Registrator[PairedDetectionResult]):
         ----------
         target_data : RegistratorPreprocessedData
             Preprocessed target image data.
-        combined_mask : np.ndarray | None
+        combined_mask : UInt8Mask | None
             Unused for keypoint matching; kept for interface compatibility.
         initial_motion_matrix : PerspectiveMatrix | None
             Unused for keypoint matching; kept for interface compatibility.

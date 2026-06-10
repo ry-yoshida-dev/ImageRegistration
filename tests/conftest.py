@@ -4,6 +4,8 @@ import cv2
 import numpy as np
 import pytest
 
+from image_registration import UInt8Image
+
 
 @pytest.fixture
 def image_size() -> tuple[int, int]:
@@ -12,7 +14,7 @@ def image_size() -> tuple[int, int]:
 
 
 @pytest.fixture
-def source_image(image_size: tuple[int, int]) -> np.ndarray:
+def source_image(image_size: tuple[int, int]) -> UInt8Image:
     """Return a grayscale source image with distinct local features."""
     height, width = image_size
     image = np.zeros((height, width), dtype=np.uint8)
@@ -44,9 +46,9 @@ def affine_transform() -> np.ndarray:
 
 @pytest.fixture
 def target_image(
-    source_image: np.ndarray,
+    source_image: UInt8Image,
     affine_transform: np.ndarray,
-) -> np.ndarray:
+) -> UInt8Image:
     """Return the source image warped by ``affine_transform``."""
     height, width = source_image.shape
     return cv2.warpAffine(
@@ -59,7 +61,7 @@ def target_image(
 
 
 @pytest.fixture
-def source_image_bgr(source_image: np.ndarray) -> np.ndarray:
+def source_image_bgr(source_image: UInt8Image) -> UInt8Image:
     """Return a BGR version of the grayscale source image."""
     return cv2.cvtColor(source_image, cv2.COLOR_GRAY2BGR)
 

@@ -10,10 +10,10 @@ Perspective transforms (`PerspectiveMatrix`, `PerspectiveTransformationMethod`, 
 
 | Component | Description |
 | --------- | ----------- |
+| [`types/`](./types/) | Shared type aliases for images, masks, and registration detail results |
 | [`data.py`](./data.py) | Preprocessed image data used during registration |
 | [`registrator.py`](./registrator.py) | Abstract base registrator returning motion matrix and detail result |
 | [`parameter.py`](./parameter.py) | Common registration parameters shared by all methods |
-| [`registration_result.py`](./registration_result.py) | Union type alias for method-specific registration detail results |
 | [`ecc/`](./ecc/) | Low-level ECC algorithm processor |
 | [`method.py`](./method.py) | Enumeration of available registration methods with factory method |
 | [`sequential_image_registration.py`](./sequential_image_registration.py) | Sequential registration for processing image sequences |

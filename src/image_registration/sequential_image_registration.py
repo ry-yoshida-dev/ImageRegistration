@@ -2,12 +2,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-import numpy as np
-
 from projective import PerspectiveMatrix, register_perspective_matrix
 
+from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 from .data import RegistratorPreprocessedData
-from .registration_result import RegistrationDetailResult
 from .registrator import Registrator
 from .method import RegistrationMethod
 from .processors import MethodRegistrationParameters
@@ -20,9 +18,9 @@ class SequentialImageRegistrator:
     """
 
     method: RegistrationMethod
-    previous_image: np.ndarray
+    previous_image: UInt8Image
     registration_params: MethodRegistrationParameters
-    previous_mask: np.ndarray | None = None
+    previous_mask: UInt8Mask | None = None
     normal_registrator: Registrator[RegistrationDetailResult] = field(init=False, repr=False)
     previous_data: RegistratorPreprocessedData = field(init=False, repr=False)
     previous_motion_matrix: PerspectiveMatrix = field(init=False, repr=False)
@@ -41,17 +39,17 @@ class SequentialImageRegistrator:
 
     def update(
         self,
-        current_image: np.ndarray,
-        current_mask: np.ndarray | None = None,
+        current_image: UInt8Image,
+        current_mask: UInt8Mask | None = None,
     ) -> tuple[PerspectiveMatrix, RegistrationDetailResult]:
         """
         Register the current frame against the previous frame and advance state.
 
         Parameters
         ----------
-        current_image : np.ndarray
+        current_image : UInt8Image
             Frame to register.
-        current_mask : np.ndarray | None
+        current_mask : UInt8Mask | None
             Optional mask for the current frame.
 
         Returns
@@ -81,17 +79,17 @@ class SequentialImageRegistrator:
 
     def register_image(
         self,
-        image: np.ndarray,
-        mask: np.ndarray | None = None,
+        image: UInt8Image,
+        mask: UInt8Mask | None = None,
     ) -> None:
         """
         Replace the reference frame without computing a motion matrix.
 
         Parameters
         ----------
-        image : np.ndarray
+        image : UInt8Image
             New reference image.
-        mask : np.ndarray | None
+        mask : UInt8Mask | None
             Optional mask for the new reference image.
         """
         current_data = self.normal_registrator.preprocess(
