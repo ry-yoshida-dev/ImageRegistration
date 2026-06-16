@@ -4,7 +4,7 @@ from .farneback import FarnebackRegistrationParameters, FarnebackRegistrator
 from .kp_matching import KPMatchingRegistrator, KPMatchingRegistrationParameters
 from .lucas_kanade import LucasKanadeRegistrationParameters, LucasKanadeRegistrator
 
-MethodRegistrationParameters = (
+RegistrationMethodParameters = (
     KPMatchingRegistrationParameters
     | ECCRegistrationParameters
     | LucasKanadeRegistrationParameters
@@ -22,5 +22,5 @@ __all__ = [
     "KPMatchingRegistrationParameters",
     "LucasKanadeRegistrationParameters",
     "LucasKanadeRegistrator",
-    "MethodRegistrationParameters",
+    "RegistrationMethodParameters",
 ]

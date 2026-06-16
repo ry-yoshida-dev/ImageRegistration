@@ -16,6 +16,8 @@ Perspective transforms (`PerspectiveMatrix`, `PerspectiveTransformationMethod`, 
 | [`parameter.py`](./parameter.py) | Common registration parameters shared by all methods |
 | [`ecc/`](./ecc/) | Low-level ECC algorithm processor |
 | [`method.py`](./method.py) | Enumeration of available registration methods with factory method |
+| [`config/`](./config/) | DictConfig keys and ``RegistratorBuilder`` for config-driven construction |
+| [`builder.py`](./builder.py) | Re-export of ``RegistratorBuilder`` |
 | [`sequential_image_registration.py`](./sequential_image_registration.py) | Sequential registration for processing image sequences |
 | [`processors/`](./processors/) | Method-specific registrators and parameters |
 
@@ -33,4 +35,22 @@ registrator = RegistrationMethod.ECC.build_registrator(
     registration_params=registration_params,
 )
 motion_matrix, detail_result = registrator.run_registration_pipeline(next_frame)
+```
+
+Config-driven construction:
+
+```python
+from omegaconf import OmegaConf
+
+from image_registration import ConfigKey, RegistratorBuilder
+
+cfg = OmegaConf.create(
+    {
+        ConfigKey._IMAGE_REGISTRATION: {
+            "method": "ECC",
+            "ECC": {"transform_type": "AFFINE"},
+        },
+    }
+)
+registrator = RegistratorBuilder.from_config(cfg).build(source_image=frame)
 ```

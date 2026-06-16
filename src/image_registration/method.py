@@ -13,7 +13,7 @@ from .processors import (
     KPMatchingRegistrationParameters,
     LucasKanadeRegistrationParameters,
     LucasKanadeRegistrator,
-    MethodRegistrationParameters,
+    RegistrationMethodParameters,
 )
 
 
@@ -30,7 +30,7 @@ class RegistrationMethod(Enum):
     def build_registrator(
         self,
         source_image: UInt8Image,
-        registration_params: MethodRegistrationParameters,
+        registration_params: RegistrationMethodParameters,
         source_mask: UInt8Mask | None = None,
     ) -> Registrator[RegistrationDetailResult]:
         """
@@ -40,7 +40,7 @@ class RegistrationMethod(Enum):
         ----------
         source_image : UInt8Image
             Source image used to initialize registration state.
-        registration_params : MethodRegistrationParameters
+        registration_params : RegistrationMethodParameters
             Method-specific parameter dataclass.
         source_mask : UInt8Mask | None
             Optional mask for the source image.

@@ -8,7 +8,7 @@ from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 from .data import RegistratorPreprocessedData
 from .registrator import Registrator
 from .method import RegistrationMethod
-from .processors import MethodRegistrationParameters
+from .processors import RegistrationMethodParameters
 
 
 @dataclass(kw_only=True)
@@ -19,7 +19,7 @@ class SequentialImageRegistrator:
 
     method: RegistrationMethod
     previous_image: UInt8Image
-    registration_params: MethodRegistrationParameters
+    registration_params: RegistrationMethodParameters
     previous_mask: UInt8Mask | None = None
     normal_registrator: Registrator[RegistrationDetailResult] = field(init=False, repr=False)
     previous_data: RegistratorPreprocessedData = field(init=False, repr=False)

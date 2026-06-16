@@ -1,3 +1,5 @@
+from .builder import RegistratorBuilder
+from .config import ConfigKey
 from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 from .data import RegistratorPreprocessedData
 from .registrator import Registrator
@@ -9,11 +11,12 @@ from .processors import (
     FarnebackRegistrationParameters,
     KPMatchingRegistrationParameters,
     LucasKanadeRegistrationParameters,
-    MethodRegistrationParameters,
+    RegistrationMethodParameters,
 )
 from .sequential_image_registration import SequentialImageRegistrator
 
 __all__ = [
+    "ConfigKey",
     "ECCParameters",
     "ECCProcessor",
     "ECCResult",
@@ -21,9 +24,10 @@ __all__ = [
     "FarnebackRegistrationParameters",
     "ImageRegistrationParameters",
     "Registrator",
+    "RegistratorBuilder",
     "KPMatchingRegistrationParameters",
     "LucasKanadeRegistrationParameters",
-    "MethodRegistrationParameters",
+    "RegistrationMethodParameters",
     "RegistrationDetailResult",
     "RegistrationMethod",
     "RegistratorPreprocessedData",
