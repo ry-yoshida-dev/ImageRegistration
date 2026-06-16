@@ -1,5 +1,4 @@
-from .builder import RegistratorBuilder
-from .config import ConfigKey
+from .config import ConfigKey, RegistratorBuilder
 from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 from .data import RegistratorPreprocessedData
 from .registrator import Registrator

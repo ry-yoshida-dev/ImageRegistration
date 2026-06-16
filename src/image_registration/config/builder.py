@@ -31,12 +31,13 @@ class RegistratorBuilder:
     @classmethod
     def from_config(cls, cfg: DictConfig) -> RegistratorBuilder:
         """
-        Create a builder from a root DictConfig.
+        Create a builder from a registration DictConfig.
 
         Parameters
         ----------
         cfg : DictConfig
-            Root OmegaConf configuration.
+            Registration configuration containing ``method`` and a method-specific
+            section (for example ``ECC`` or ``KPMatching``).
 
         Returns
         -------

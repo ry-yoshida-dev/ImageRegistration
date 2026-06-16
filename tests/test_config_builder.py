@@ -6,7 +6,7 @@ from omegaconf import OmegaConf
 from projective import PerspectiveTransformationMethod
 
 from image_registration import RegistrationMethod, UInt8Image
-from image_registration.config import ConfigKey, RegistratorBuilder
+from image_registration.config import RegistratorBuilder
 from image_registration.ecc import ECCResult
 from image_registration.processors import ECCRegistrator
 
@@ -23,13 +23,11 @@ def test_registrator_builder_builds_ecc_from_config(
     """RegistratorBuilder should deserialize ECC parameters and build a registrator."""
     cfg = OmegaConf.create(
         {
-            ConfigKey._IMAGE_REGISTRATION: {
-                "method": RegistrationMethod.ECC.value,
-                "ECC": {
+            "method": RegistrationMethod.ECC.value,
+            "ECC": {
+                "transform_type": AFFINE_TRANSFORM_TYPE.value,
+                "ecc_parameters": {
                     "transform_type": AFFINE_TRANSFORM_TYPE.value,
-                    "ecc_parameters": {
-                        "transform_type": AFFINE_TRANSFORM_TYPE.value,
-                    },
                 },
             },
         }
@@ -48,13 +46,7 @@ def test_registrator_builder_uses_defaults_for_missing_method_section(
     source_image: UInt8Image,
 ) -> None:
     """Missing method sections should fall back to dataclass defaults."""
-    cfg = OmegaConf.create(
-        {
-            ConfigKey._IMAGE_REGISTRATION: {
-                "method": RegistrationMethod.ECC.value,
-            },
-        }
-    )
+    cfg = OmegaConf.create({"method": RegistrationMethod.ECC.value})
 
     registrator = RegistratorBuilder.from_config(cfg).build(source_image=source_image)
 
@@ -64,7 +56,7 @@ def test_registrator_builder_uses_defaults_for_missing_method_section(
 
 def test_registrator_builder_raises_when_method_key_is_missing() -> None:
     """The builder should fail fast when the method key is absent."""
-    cfg = OmegaConf.create({ConfigKey._IMAGE_REGISTRATION: {}})
+    cfg = OmegaConf.create({})
 
     with pytest.raises(ValueError, match="Configuration key"):
         RegistratorBuilder.from_config(cfg).resolve_method()

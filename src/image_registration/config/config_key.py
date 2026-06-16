@@ -10,20 +10,12 @@ class ConfigKey(StrEnum):
     Dot-notation paths for accessing image registration configuration.
 
     Use these keys with ``DictConfigHandler`` to read nested OmegaConf sections.
+    Keys are relative to the section passed to ``RegistratorBuilder.from_config``.
     """
 
-    # Top-level keys
-    _IMAGE_REGISTRATION = "ImageRegistration"
+    METHOD = "method"
 
-    METHOD = f"{_IMAGE_REGISTRATION}.method"
-
-    # Method-specific parameter sections
-    _KP_MATCHING = f"{_IMAGE_REGISTRATION}.KPMatching"
-    _ECC = f"{_IMAGE_REGISTRATION}.ECC"
-    _FARNEBACK = f"{_IMAGE_REGISTRATION}.Farneback"
-    _LUCAS_KANADE = f"{_IMAGE_REGISTRATION}.LucasKanade"
-
-    KP_MATCHING = _KP_MATCHING
-    ECC = _ECC
-    FARNEBACK = _FARNEBACK
-    LUCAS_KANADE = _LUCAS_KANADE
+    KP_MATCHING = "KPMatching"
+    ECC = "ECC"
+    FARNEBACK = "Farneback"
+    LUCAS_KANADE = "LucasKanade"

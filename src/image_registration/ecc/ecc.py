@@ -119,7 +119,10 @@ class ECCProcessor:
                 + f"{self.params.scale_factor} produces invalid size "
                 + f"({new_height}, {new_width}) from input shape {image.shape}"
             )
-        return cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_LINEAR)
+        return cast(
+            UInt8Image,
+            cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_LINEAR),
+        )
 
     def _rescale_mask(self, mask: UInt8Mask | None) -> UInt8Mask | None:
         """
@@ -152,7 +155,10 @@ class ECCProcessor:
                 + f"{self.params.scale_factor} produces invalid mask size "
                 + f"({new_height}, {new_width}) from input shape {mask.shape}"
             )
-        return cv2.resize(mask, (new_width, new_height), interpolation=cv2.INTER_NEAREST)
+        return cast(
+            UInt8Mask,
+            cv2.resize(mask, (new_width, new_height), interpolation=cv2.INTER_NEAREST),
+        )
 
     def _resolve_warp_matrix(
         self,
