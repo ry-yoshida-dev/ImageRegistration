@@ -2,7 +2,7 @@
 
 ## Overview
 
-Pytest suite for the `image_registration` package. Tests cover parameter validation, factory wiring, preprocessing, affine registration accuracy on synthetic images, sequential frame updates, and ECC failure handling.
+Pytest suite for `image_registration`.
 
 ## Components
 
@@ -17,10 +17,3 @@ Pytest suite for the `image_registration` package. Tests cover parameter validat
 | [`test_registration_affine.py`](./test_registration_affine.py) | End-to-end affine registration for all methods |
 | [`test_sequential.py`](./test_sequential.py) | `SequentialImageRegistrator` state management |
 | [`test_ecc_processor.py`](./test_ecc_processor.py) | Low-level ECC processor edge cases |
-
-## Examples
-
-```bash
-uv pip install -e ".[dev]"
-pytest
-```

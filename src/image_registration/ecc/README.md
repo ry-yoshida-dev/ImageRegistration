@@ -2,7 +2,7 @@
 
 ## Overview
 
-This module provides the Enhanced Correlation Coefficient (ECC) registration algorithm. `ECCProcessor` aligns two grayscale images and returns a motion matrix from the `projective` package together with an `ECCResult` in original image coordinates. Image rescaling is configured via `ECCParameters.scale_factor`.
+Low-level Enhanced Correlation Coefficient (ECC) processor that aligns two grayscale images without the shared registrator pipeline.
 
 ## Components
 
