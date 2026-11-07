@@ -9,7 +9,6 @@ from image_registration import RegistrationMethod, UInt8Image
 from image_registration.config import RegistratorBuilder
 from image_registration.ecc import ECCResult
 from image_registration.processors import ECCRegistrator
-
 from tests.helpers import assert_affine_matrix_close
 
 AFFINE_TRANSFORM_TYPE = PerspectiveTransformationMethod.AFFINE
@@ -51,7 +50,9 @@ def test_registrator_builder_uses_defaults_for_missing_method_section(
     registrator = RegistratorBuilder.from_config(cfg).build(source_image=source_image)
 
     assert isinstance(registrator, ECCRegistrator)
-    assert registrator.params.transform_type == PerspectiveTransformationMethod.HOMOGRAPHY
+    assert (
+        registrator.params.transform_type == PerspectiveTransformationMethod.HOMOGRAPHY
+    )
 
 
 def test_registrator_builder_raises_when_method_key_is_missing() -> None:
@@ -59,4 +60,4 @@ def test_registrator_builder_raises_when_method_key_is_missing() -> None:
     cfg = OmegaConf.create({})
 
     with pytest.raises(ValueError, match="Configuration key"):
-        RegistratorBuilder.from_config(cfg).resolve_method()
+        _ = RegistratorBuilder.from_config(cfg).resolve_method()

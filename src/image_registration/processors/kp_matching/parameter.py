@@ -9,6 +9,7 @@ from ...parameter import ImageRegistrationParameters
 
 DEFAULT_DETECTION_METHOD = KPDetectionMethod.SIFT
 
+
 @dataclass
 class KPMatchingRegistrationParameters(ImageRegistrationParameters):
     """

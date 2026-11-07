@@ -6,11 +6,11 @@ from typing import override
 from kp_detection import KPDetector
 from projective import PerspectiveMatrix
 
-from ...types import UInt8Mask
 from ...data import RegistratorPreprocessedData
-from ...registrator import Registrator
 from ...ecc import ECCProcessor, ECCResult
 from ...parameter import ImageRegistrationParameters
+from ...registrator import Registrator
+from ...types import UInt8Mask
 from .parameter import ECCRegistrationParameters
 
 

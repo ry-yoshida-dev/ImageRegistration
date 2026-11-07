@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import numpy as np
+from numpy.typing import NDArray
 from projective import PerspectiveMatrix
 
 
 def assert_affine_matrix_close(
     estimated: PerspectiveMatrix,
-    expected: np.ndarray,
+    expected: NDArray[np.float64],
     tolerance: float,
 ) -> None:
     """
@@ -21,7 +22,7 @@ def assert_affine_matrix_close(
     tolerance : float
         Maximum allowed absolute element-wise difference.
     """
-    difference = float(np.max(np.abs(estimated.value - expected)))
+    difference = float(np.abs(estimated.value - expected).max())
     assert difference <= tolerance, (
         f"Matrix difference {difference} exceeds tolerance {tolerance}.\n"
         + f"Estimated:\n{estimated.value}\nExpected:\n{expected}"

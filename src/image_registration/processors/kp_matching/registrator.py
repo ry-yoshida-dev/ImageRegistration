@@ -4,15 +4,14 @@ from dataclasses import dataclass, field
 from typing import override
 
 import numpy as np
-
 from kp_detection import KPDetector
 from kp_matching import KPMatchingProcessor, PairedDetectionResult
 from projective import PerspectiveMatrix
 
-from ...types import UInt8Mask
 from ...data import RegistratorPreprocessedData
-from ...registrator import Registrator
 from ...parameter import ImageRegistrationParameters
+from ...registrator import Registrator
+from ...types import UInt8Mask
 from .parameter import KPMatchingRegistrationParameters
 
 
@@ -86,7 +85,9 @@ class KPMatchingRegistrator(Registrator[PairedDetectionResult]):
             gallery_det_result=target_detection_result,
         )
         matched_source_kps = paired_result.query_matched_coordinates.astype(np.float32)
-        matched_target_kps = paired_result.gallery_matched_coordinates.astype(np.float32)
+        matched_target_kps = paired_result.gallery_matched_coordinates.astype(
+            np.float32
+        )
         transform_type = self.params.transform_type
         motion_matrix, _ = transform_type.perspective_class.create_from_points(
             origin_points=matched_source_kps,

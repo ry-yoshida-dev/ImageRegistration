@@ -2,19 +2,19 @@ from __future__ import annotations
 
 from enum import Enum
 
-from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
-from .registrator import Registrator
 from .processors import (
     ECCRegistrationParameters,
     ECCRegistrator,
     FarnebackRegistrationParameters,
     FarnebackRegistrator,
-    KPMatchingRegistrator,
     KPMatchingRegistrationParameters,
+    KPMatchingRegistrator,
     LucasKanadeRegistrationParameters,
     LucasKanadeRegistrator,
     RegistrationMethodParameters,
 )
+from .registrator import Registrator
+from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 
 
 class RegistrationMethod(Enum):
@@ -52,7 +52,9 @@ class RegistrationMethod(Enum):
         """
         match self:
             case RegistrationMethod.KP_MATCHING:
-                if not isinstance(registration_params, KPMatchingRegistrationParameters):
+                if not isinstance(
+                    registration_params, KPMatchingRegistrationParameters
+                ):
                     raise TypeError(
                         "KP_MATCHING requires KPMatchingRegistrationParameters, "
                         + f"got {type(registration_params).__name__}"
@@ -85,7 +87,9 @@ class RegistrationMethod(Enum):
                     source_mask=source_mask,
                 )
             case RegistrationMethod.LK_OPTICAL_FLOW:
-                if not isinstance(registration_params, LucasKanadeRegistrationParameters):
+                if not isinstance(
+                    registration_params, LucasKanadeRegistrationParameters
+                ):
                     raise TypeError(
                         "LK_OPTICAL_FLOW requires LucasKanadeRegistrationParameters, "
                         + f"got {type(registration_params).__name__}"

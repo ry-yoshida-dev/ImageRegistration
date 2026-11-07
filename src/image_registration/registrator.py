@@ -1,20 +1,20 @@
 from __future__ import annotations
 
-import cv2
-import numpy as np
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import TypeVar, cast
 
+import cv2
+import numpy as np
 from kp_detection import DetectionResultUnion, KPDetector
 from projective import (
     PerspectiveMatrix,
     register_perspective_matrix,
 )
 
-from .types import UInt8Image, UInt8Mask
 from .data import RegistratorPreprocessedData
 from .parameter import ImageRegistrationParameters
+from .types import UInt8Image, UInt8Mask
 
 DetailResultT = TypeVar("DetailResultT")
 
@@ -74,9 +74,14 @@ class Registrator[DetailResultT](ABC):
         RegistratorPreprocessedData
             Grayscale image, keypoints, descriptors, and optional mask.
         """
-        grayscale_image: UInt8Image = cast(UInt8Image, (
-            image if len(image.shape) == 2 else cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        ))
+        grayscale_image: UInt8Image = cast(
+            UInt8Image,
+            (
+                image
+                if len(image.shape) == 2
+                else cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            ),
+        )
 
         detection_result: DetectionResultUnion | None = None
         if self.keypoint_detector is None:

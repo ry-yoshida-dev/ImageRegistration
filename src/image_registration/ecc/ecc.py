@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import cv2
-import numpy as np
 from dataclasses import dataclass, field
 from typing import cast
 
+import cv2
+import numpy as np
 from projective import PerspectiveMatrix, register_perspective_matrix
 
 from ..types.array import UInt8Image, UInt8Mask

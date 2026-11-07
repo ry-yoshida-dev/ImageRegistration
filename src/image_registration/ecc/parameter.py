@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-import cv2
 from dataclasses import dataclass
 from functools import cached_property
+
+import cv2
 from projective import PerspectiveTransformationMethod
 
 
@@ -25,7 +26,9 @@ class ECCParameters:
         Gaussian filter size for the ECC algorithm.
     """
 
-    transform_type: PerspectiveTransformationMethod = PerspectiveTransformationMethod.AFFINE
+    transform_type: PerspectiveTransformationMethod = (
+        PerspectiveTransformationMethod.AFFINE
+    )
     scale_factor: float = 1.0
     eps: float = 1e-5
     max_iter: int = 100
@@ -58,7 +61,11 @@ class ECCParameters:
         tuple[int, int, float]
             Criteria tuple passed to ``cv2.findTransformECC``.
         """
-        return (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, self.max_iter, self.eps)
+        return (
+            cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT,
+            self.max_iter,
+            self.eps,
+        )
 
     @property
     def cv2_motion_type(self) -> int:

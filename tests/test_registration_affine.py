@@ -13,7 +13,6 @@ from image_registration import (
     UInt8Image,
 )
 from image_registration.ecc import ECCParameters, ECCResult
-
 from tests.helpers import assert_affine_matrix_close
 
 AFFINE_TRANSFORM_TYPE = PerspectiveTransformationMethod.AFFINE

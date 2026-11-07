@@ -4,11 +4,11 @@ from dataclasses import dataclass, field
 
 from projective import PerspectiveMatrix, register_perspective_matrix
 
-from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 from .data import RegistratorPreprocessedData
-from .registrator import Registrator
 from .method import RegistrationMethod
 from .processors import RegistrationMethodParameters
+from .registrator import Registrator
+from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 
 
 @dataclass(kw_only=True)
@@ -21,7 +21,9 @@ class SequentialImageRegistrator:
     previous_image: UInt8Image
     registration_params: RegistrationMethodParameters
     previous_mask: UInt8Mask | None = None
-    normal_registrator: Registrator[RegistrationDetailResult] = field(init=False, repr=False)
+    normal_registrator: Registrator[RegistrationDetailResult] = field(
+        init=False, repr=False
+    )
     previous_data: RegistratorPreprocessedData = field(init=False, repr=False)
     previous_motion_matrix: PerspectiveMatrix = field(init=False, repr=False)
 

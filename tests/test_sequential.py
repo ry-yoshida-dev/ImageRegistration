@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import cv2
 import numpy as np
 from projective import PerspectiveTransformationMethod
@@ -10,7 +12,6 @@ from image_registration import (
     SequentialImageRegistrator,
     UInt8Image,
 )
-
 from tests.helpers import assert_affine_matrix_close
 
 
@@ -50,9 +51,9 @@ def test_register_image_replaces_reference_without_motion_estimation(
         previous_image=source_image,
         registration_params=registration_params,
     )
-    sequential.update(target_image)
+    _ = sequential.update(target_image)
 
-    new_reference = cv2.GaussianBlur(target_image, (5, 5), 0)
+    new_reference = cast(UInt8Image, cv2.GaussianBlur(target_image, (5, 5), 0))
     sequential.register_image(new_reference)
 
     expected_data = sequential.normal_registrator.preprocess(new_reference)

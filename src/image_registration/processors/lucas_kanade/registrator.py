@@ -7,10 +7,10 @@ from kp_detection import KPDetector
 from optical_flow import LucasKanadeResult, PyrLKFlow
 from projective import PerspectiveMatrix
 
-from ...types import UInt8Mask
 from ...data import RegistratorPreprocessedData
-from ...registrator import Registrator
 from ...parameter import ImageRegistrationParameters
+from ...registrator import Registrator
+from ...types import UInt8Mask
 from .parameter import LucasKanadeRegistrationParameters
 
 

@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import cv2
-import numpy as np
 from dataclasses import dataclass
 from typing import override
 
+import cv2
+import numpy as np
 from kp_detection import DetectionResultUnion
 
 from .types import UInt8Image, UInt8Mask
@@ -37,9 +37,7 @@ class RegistratorPreprocessedData:
 
     @override
     def __str__(self) -> str:
-        mask_shape: str = (
-            str(self.mask.shape) if self.mask is not None else "None"
-        )
+        mask_shape: str = str(self.mask.shape) if self.mask is not None else "None"
         return (
             "RegistratorPreprocessedData("
             + f"image.shape={self.image.shape}, "

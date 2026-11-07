@@ -1,7 +1,5 @@
 from .config import ConfigKey, RegistratorBuilder
-from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 from .data import RegistratorPreprocessedData
-from .registrator import Registrator
 from .ecc import ECCParameters, ECCProcessor, ECCResult
 from .method import RegistrationMethod
 from .parameter import ImageRegistrationParameters
@@ -12,7 +10,9 @@ from .processors import (
     LucasKanadeRegistrationParameters,
     RegistrationMethodParameters,
 )
+from .registrator import Registrator
 from .sequential_image_registration import SequentialImageRegistrator
+from .types import RegistrationDetailResult, UInt8Image, UInt8Mask
 
 __all__ = [
     "ConfigKey",

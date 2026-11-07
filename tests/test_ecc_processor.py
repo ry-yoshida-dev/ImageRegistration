@@ -29,7 +29,9 @@ def test_ecc_processor_returns_identity_on_non_convergence() -> None:
     assert ecc_result.correlation_coefficient == 0.0
 
 
-def test_ecc_processor_rejects_invalid_scale_factor(image_size: tuple[int, int]) -> None:
+def test_ecc_processor_rejects_invalid_scale_factor(
+    image_size: tuple[int, int],
+) -> None:
     """ECC rescaling should fail fast when scale_factor yields invalid dimensions."""
     height, width = image_size
     image = np.zeros((height, width), dtype=np.uint8)
@@ -41,4 +43,4 @@ def test_ecc_processor_rejects_invalid_scale_factor(image_size: tuple[int, int])
     )
 
     with pytest.raises(ValueError):
-        processor.run(image, image)
+        _ = processor.run(image, image)
