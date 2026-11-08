@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 from projective import PerspectiveTransformationMethod, register_perspective_matrix
 
+from image_registration import UInt8Image
 from image_registration.ecc import ECCParameters, ECCProcessor
 
 
@@ -44,3 +45,26 @@ def test_ecc_processor_rejects_invalid_scale_factor(
 
     with pytest.raises(ValueError):
         _ = processor.run(image, image)
+
+
+def test_ecc_processor_reuses_previous_matrix_without_modifying_it(
+    source_image: UInt8Image,
+    target_image: UInt8Image,
+) -> None:
+    """ECC should start from a float32 previous result without writing into it."""
+    processor = ECCProcessor(
+        params=ECCParameters(transform_type=PerspectiveTransformationMethod.AFFINE),
+    )
+    first_matrix, _ = processor.run(source_image, target_image)
+    assert first_matrix.value.dtype == np.float32
+    first_value = first_matrix.value.copy()
+
+    second_matrix, ecc_result = processor.run(
+        source_image,
+        target_image,
+        previous_motion_matrix=first_matrix,
+    )
+
+    np.testing.assert_array_equal(first_matrix.value, first_value)
+    assert ecc_result.is_converged
+    assert second_matrix is not first_matrix

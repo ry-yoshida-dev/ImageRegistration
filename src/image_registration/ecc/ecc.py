@@ -202,7 +202,7 @@ class ECCProcessor:
         target_image : UInt8Image
             Target image for ECC in working coordinates.
         warp_matrix : np.ndarray
-            Initial warp matrix updated in place by OpenCV.
+            Initial warp matrix. It is copied and never modified.
         mask : UInt8Mask | None
             Optional registration mask in working coordinates.
 
@@ -211,13 +211,10 @@ class ECCProcessor:
         tuple[np.ndarray, float]
             Updated warp matrix after ECC optimization and the final correlation
             coefficient.
-
-        NOTE
-        --------
-        ``warp_matrix`` is updated in place by OpenCV function ``cv2.findTransformECC``.
         """
         input_mask = _EMPTY_ECC_MASK if mask is None else mask
-        warp_matrix_f32 = np.asarray(warp_matrix, dtype=np.float32)
+        # cv2.findTransformECC writes into its warp matrix, so give it a private copy.
+        warp_matrix_f32 = np.array(warp_matrix, dtype=np.float32)
         correlation_coefficient, _ = cv2.findTransformECC(
             source_image,
             target_image,
@@ -227,4 +224,4 @@ class ECCProcessor:
             input_mask,
             self.params.gaussFiltSize,
         )
-        return warp_matrix_f32.copy(), float(correlation_coefficient)
+        return warp_matrix_f32, float(correlation_coefficient)
