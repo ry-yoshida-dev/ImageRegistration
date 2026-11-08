@@ -22,7 +22,8 @@ def assert_affine_matrix_close(
     tolerance : float
         Maximum allowed absolute element-wise difference.
     """
-    difference = float(np.abs(estimated.value - expected).max())
+    absolute_difference: NDArray[np.float64] = np.abs(estimated.value - expected)
+    difference = float(absolute_difference.max())
     assert difference <= tolerance, (
         f"Matrix difference {difference} exceeds tolerance {tolerance}.\n"
         + f"Estimated:\n{estimated.value}\nExpected:\n{expected}"
